@@ -1051,13 +1051,12 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
-        builder.addDisallowedApplication(VIVA_PACKAGE_NAME); // add viva package to disallowed applications
+        // builder.addDisallowedApplication(VIVA_PACKAGE_NAME); // add viva package to disallowed applications
         
         for (String pkg : mProfile.mAllowedAppsVpn) {
-            if(pkg.equals(VIVA_PACKAGE_NAME)){//ignore viva package ( do not add viva to vpn tunnel allowed apps)
-            
-                                        continue;
-            }
+            // if(pkg.equals(VIVA_PACKAGE_NAME)){//ignore viva package ( do not add viva to vpn tunnel allowed apps)
+                // continue;
+            // }
             try {
                 if (mProfile.mAllowedAppsVpnAreDisallowed) {
                     builder.addDisallowedApplication(pkg);
