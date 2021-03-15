@@ -86,6 +86,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
     public static final String VPNSERVICE_TUN = "vpnservice-tun";
     public final static String ORBOT_PACKAGE_NAME = "org.torproject.android";
+    public final static String VIVA_PACKAGE_NAME = "net.vivavpn.app";
     private static final String PAUSE_VPN = "de.blinkt.openvpn.PAUSE_VPN";
     private static final String RESUME_VPN = "de.blinkt.openvpn.RESUME_VPN";
 
@@ -1050,7 +1051,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
+        builder.addDisallowedApplication(VIVA_PACKAGE_NAME); // add viva package to disallowed applications
+        
         for (String pkg : mProfile.mAllowedAppsVpn) {
+            if(pkg.equals(VIVA_PACKAGE_NAME)){//ignore viva package ( do not add viva to vpn tunnel allowed apps)
+            
+                                        continue;
+            }
             try {
                 if (mProfile.mAllowedAppsVpnAreDisallowed) {
                     builder.addDisallowedApplication(pkg);
