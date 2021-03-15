@@ -1051,12 +1051,16 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             }
         }
 
-        // builder.addDisallowedApplication(VIVA_PACKAGE_NAME); // add viva package to disallowed applications
+        try {
+        builder.addDisallowedApplication(VIVA_PACKAGE_NAME); // add viva package to disallowed applications
+    } catch (PackageManager.NameNotFoundException e) {
+            VpnStatus.logDebug("viva not installed?");
+        }
         
         for (String pkg : mProfile.mAllowedAppsVpn) {
-            // if(pkg.equals(VIVA_PACKAGE_NAME)){//ignore viva package ( do not add viva to vpn tunnel allowed apps)
-                // continue;
-            // }
+            if(!pkg.equals(VIVA_PACKAGE_NAME)){//ignore viva package ( do not add viva to vpn tunnel allowed apps)
+                
+            
             try {
                 if (mProfile.mAllowedAppsVpnAreDisallowed) {
                     builder.addDisallowedApplication(pkg);
@@ -1070,6 +1074,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 mProfile.mAllowedAppsVpn.remove(pkg);
                 VpnStatus.logInfo(R.string.app_no_longer_exists, pkg);
             }
+         }
         }
 
         if (!mProfile.mAllowedAppsVpnAreDisallowed && !atLeastOneAllowedApp) {
